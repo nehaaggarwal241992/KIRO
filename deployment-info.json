@@ -1,0 +1,31 @@
+{
+  "name": "ReviewHub",
+  "version": "1.0.0",
+  "description": "Complete Feedback and Review System",
+  "buildDate": "2025-11-19T18:25:31.800Z",
+  "components": {
+    "frontend": {
+      "framework": "React + Vite",
+      "buildPath": "./frontend/dist",
+      "entryPoint": "index.html"
+    },
+    "backend": {
+      "framework": "Node.js + Express",
+      "entryPoint": "./backend/src/scripts/production.js",
+      "port": 3000
+    }
+  },
+  "deployment": {
+    "type": "Single Server (Frontend + Backend)",
+    "command": "npm run production",
+    "url": "http://localhost:3000"
+  },
+  "features": [
+    "Product browsing and reviews",
+    "User authentication (mock)",
+    "Review moderation system",
+    "Rating and statistics",
+    "Responsive design",
+    "Modern UI with animations"
+  ]
+}
