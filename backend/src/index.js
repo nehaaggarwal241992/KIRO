@@ -16,8 +16,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Configure CORS to allow frontend requests
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://gregarious-cucurucho-6930c5.netlify.app'
+];
+
+// Add CORS_ORIGIN from environment if set
+if (process.env.CORS_ORIGIN) {
+  allowedOrigins.push(process.env.CORS_ORIGIN);
+}
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'], // Vite dev server and potential frontend ports
+  origin: allowedOrigins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'x-user-id']
