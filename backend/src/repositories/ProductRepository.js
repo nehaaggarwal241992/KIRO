@@ -1,4 +1,4 @@
-import db from '../config/database.js';
+import db from '../config/databaseLoader.js';
 import { getTestDatabase } from '../config/testDatabase.js';
 import Product from '../models/Product.js';
 

@@ -1,4 +1,4 @@
-import db from './database.js';
+import db from './databaseLoader.js';
 
 // Create all tables with proper schema
 export function initializeDatabase() {

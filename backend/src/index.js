@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import './config/initDatabase.js'; // Initialize database on startup
-import db from './config/database.js'; // Import enhanced database connection
+import db from './config/databaseLoader.js'; // Import smart database loader (PostgreSQL or SQLite)
 import reviewsRouter from './routes/reviews.js';
 import productsRouter from './routes/products.js';
 import moderationRouter from './routes/moderation.js';

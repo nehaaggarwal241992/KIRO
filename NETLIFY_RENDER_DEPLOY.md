@@ -179,10 +179,11 @@ After deployment, you'll have:
 - Make sure `Start Command` is `node src/index.js`
 
 ### Error: "invalid ELF header" or "better-sqlite3" error
-- This means SQLite is trying to load (we only need PostgreSQL in production)
-- **Fix**: Change Build Command to `npm install --omit=optional`
-- This skips optional SQLite dependencies
-- Redeploy the service
+- ✅ **FIXED!** The code now automatically uses PostgreSQL in production
+- Make sure you've pushed the latest code to GitHub
+- Verify Build Command is: `npm install --omit=optional`
+- Check that `DATABASE_URL` environment variable is set
+- The app will automatically detect and use PostgreSQL when `DATABASE_URL` is present
 
 ### Frontend can't connect to backend
 - Check `VITE_API_URL` environment variable
