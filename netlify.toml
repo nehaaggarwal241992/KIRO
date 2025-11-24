@@ -12,7 +12,7 @@
   status = 200
 
 [context.production.environment]
-  VITE_API_URL = "https://review-system-api.onrender.com/api"
+  VITE_API_URL = "https://review-system-api-zwc8.onrender.com/api"
 
 [context.deploy-preview.environment]
-  VITE_API_URL = "https://review-system-api.onrender.com/api"
+  VITE_API_URL = "https://review-system-api-zwc8.onrender.com/api"
