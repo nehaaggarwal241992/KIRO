@@ -61,25 +61,18 @@ CORS_ORIGIN=*
 6. **Wait 5-10 minutes** for deployment
 7. **Copy your backend URL** (e.g., `https://review-system-api.onrender.com`)
 
-### Step 3: Initialize Database
+### Step 3: Database Auto-Initializes ✨
 
-Once backend is deployed:
+The database automatically initializes on first startup:
+- ✅ Creates all tables
+- ✅ Seeds sample data (users, products, reviews)
+- ✅ Skips seeding if data already exists
 
-1. **Go to your backend service** on Render
-2. **Click "Shell"** tab (opens a terminal)
-3. **Run initialization**:
-```bash
-node src/scripts/initPostgres.js
-```
+**No manual steps needed!** Just wait for deployment to complete.
 
-4. **Seed with demo data** (optional):
-```bash
-node src/scripts/seedDataPostgres.js
-```
-
-5. **Verify it works**:
-   - Visit: `https://your-backend-url.onrender.com/api/products`
-   - You should see JSON data!
+**Verify it works**:
+- Visit: `https://your-backend-url.onrender.com/api/products`
+- You should see JSON data!
 
 ---
 

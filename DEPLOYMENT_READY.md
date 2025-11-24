@@ -91,15 +91,14 @@ Initializing PostgreSQL database...
 Server running on port 10000
 ```
 
-### Step 5: Initialize & Seed Database (2 min)
+### Step 5: Database Auto-Initializes! ✨
 
-1. In Render, go to your service
-2. Click "Shell" tab
-3. Run these commands:
-   ```bash
-   node src/scripts/initPostgres.js
-   node src/scripts/seedDataPostgres.js
-   ```
+The database will automatically:
+- ✅ Create all tables on first startup
+- ✅ Seed sample data (users, products, reviews)
+- ✅ Skip seeding if data already exists
+
+Just wait for deployment to complete!
 
 ### Step 6: Test Backend (1 min)
 

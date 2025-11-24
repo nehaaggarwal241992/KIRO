@@ -24,6 +24,7 @@ git push origin main
 2. Click your service → Settings
 3. Click "Clear build cache"
 4. Click "Manual Deploy" → "Clear build cache & deploy"
+5. Wait 5-10 minutes - database will auto-initialize!
 
 **Option B: Fresh Start**
 - Delete the service and create a new one
@@ -40,6 +41,9 @@ Should return JSON! 🎉
 ## Full Deployment Guide
 
 If you're starting fresh or need detailed instructions:
+
+### For Free Tier (Recommended):
+🆓 **FREE_TIER_DEPLOY.md** - Perfect for Render free tier (no Shell needed!)
 
 ### For Backend (Render):
 📖 **DEPLOYMENT_READY.md** - Complete step-by-step guide
