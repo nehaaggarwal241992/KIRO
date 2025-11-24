@@ -66,7 +66,7 @@ class ProductService {
    */
   async getAllProducts() {
     try {
-      const products = this.productRepository.getAll();
+      const products = await this.productRepository.getAll();
       
       // Enhance each product with review statistics
       const productsWithStats = products.map(product => {

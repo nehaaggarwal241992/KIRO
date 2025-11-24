@@ -5,21 +5,26 @@ import Product from '../models/Product.js';
 class ProductRepository {
   constructor() {
     // Use test database if available, otherwise use regular database
-    const database = getTestDatabase() || db;
+    this.database = getTestDatabase() || db;
     
-    // Prepare statements for better performance
-    this.createStmt = database.prepare(`
-      INSERT INTO products (name, description, category)
-      VALUES (?, ?, ?)
-    `);
+    // Check if we're using async database (PostgreSQL)
+    this.isAsync = this.database.prepare && typeof this.database.prepare().run === 'function' && this.database.prepare().run.constructor.name === 'AsyncFunction';
+    
+    // Only prepare statements for SQLite (synchronous)
+    if (!this.isAsync && this.database.prepare) {
+      this.createStmt = this.database.prepare(`
+        INSERT INTO products (name, description, category)
+        VALUES (?, ?, ?)
+      `);
 
-    this.getByIdStmt = database.prepare(`
-      SELECT * FROM products WHERE id = ?
-    `);
+      this.getByIdStmt = this.database.prepare(`
+        SELECT * FROM products WHERE id = ?
+      `);
 
-    this.getAllStmt = database.prepare(`
-      SELECT * FROM products ORDER BY created_at DESC
-    `);
+      this.getAllStmt = this.database.prepare(`
+        SELECT * FROM products ORDER BY created_at DESC
+      `);
+    }
   }
 
   /**
@@ -74,9 +79,19 @@ class ProductRepository {
    * Retrieve all products
    * @returns {Product[]} Array of all products
    */
-  getAll() {
+  async getAll() {
     try {
-      const rows = this.getAllStmt.all();
+      let rows;
+      
+      if (this.isAsync || !this.getAllStmt) {
+        // PostgreSQL (async)
+        const stmt = this.database.prepare('SELECT * FROM products ORDER BY created_at DESC');
+        rows = await stmt.all();
+      } else {
+        // SQLite (sync)
+        rows = this.getAllStmt.all();
+      }
+      
       return rows.map(row => Product.fromRow(row));
     } catch (error) {
       throw new Error(`Failed to retrieve all products: ${error.message}`);
