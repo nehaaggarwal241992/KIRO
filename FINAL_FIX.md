@@ -19,7 +19,12 @@ Updated `backend/src/config/databaseLoader.js` to:
 - ✅ Use `databaseProduction.js` in production (no SQLite)
 - ✅ Use `database.js` in development (SQLite)
 
-### 3. Build Command
+### 3. Test Database Fix
+Updated `backend/src/config/testDatabase.js` to:
+- ✅ Removed SQLite import (only needed in actual test files)
+- ✅ Safe for production builds
+
+### 4. Build Command
 **CRITICAL**: Use this exact build command on Render:
 ```
 npm install --no-optional
