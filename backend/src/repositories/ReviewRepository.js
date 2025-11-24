@@ -266,9 +266,25 @@ class ReviewRepository {
    * @param {number} productId - The product ID
    * @returns {number} Average rating (0 if no approved reviews)
    */
-  getAverageRating(productId) {
+  async getAverageRating(productId) {
     try {
-      const row = this.getAverageRatingStmt.get(productId);
+      let row;
+      const database = getTestDatabase() || db;
+      
+      if (!this.getAverageRatingStmt || database.prepare().run?.constructor.name === 'AsyncFunction') {
+        // PostgreSQL (async)
+        const stmt = database.prepare(`
+          SELECT AVG(CAST(rating AS REAL)) as average_rating
+          FROM reviews 
+          WHERE product_id = $1 AND status = 'approved'
+        `);
+        const result = await stmt.get(productId);
+        row = result;
+      } else {
+        // SQLite (sync)
+        row = this.getAverageRatingStmt.get(productId);
+      }
+      
       return row && row.average_rating ? parseFloat(row.average_rating) : 0;
     } catch (error) {
       throw new Error(`Failed to get average rating: ${error.message}`);
@@ -281,10 +297,26 @@ class ReviewRepository {
    * @param {string} status - Status filter (default: 'approved')
    * @returns {number} Number of reviews
    */
-  getReviewCount(productId, status = 'approved') {
+  async getReviewCount(productId, status = 'approved') {
     try {
-      const row = this.getReviewCountStmt.get(productId, status);
-      return row ? row.count : 0;
+      let row;
+      const database = getTestDatabase() || db;
+      
+      if (!this.getReviewCountStmt || database.prepare().run?.constructor.name === 'AsyncFunction') {
+        // PostgreSQL (async)
+        const stmt = database.prepare(`
+          SELECT COUNT(*) as count
+          FROM reviews 
+          WHERE product_id = $1 AND status = $2
+        `);
+        const result = await stmt.get(productId, status);
+        row = result;
+      } else {
+        // SQLite (sync)
+        row = this.getReviewCountStmt.get(productId, status);
+      }
+      
+      return row ? parseInt(row.count) : 0;
     } catch (error) {
       throw new Error(`Failed to get review count: ${error.message}`);
     }

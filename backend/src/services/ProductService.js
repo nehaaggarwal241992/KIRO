@@ -69,9 +69,9 @@ class ProductService {
       const products = await this.productRepository.getAll();
       
       // Enhance each product with review statistics
-      const productsWithStats = products.map(product => {
-        const averageRating = this.reviewRepository.getAverageRating(product.id);
-        const reviewCount = this.reviewRepository.getReviewCount(product.id, 'approved');
+      const productsWithStats = await Promise.all(products.map(async (product) => {
+        const averageRating = await this.reviewRepository.getAverageRating(product.id);
+        const reviewCount = await this.reviewRepository.getReviewCount(product.id, 'approved');
 
         return {
           id: product.id,
@@ -85,7 +85,7 @@ class ProductService {
             hasReviews: reviewCount > 0
           }
         };
-      });
+      }));
 
       return productsWithStats;
     } catch (error) {
