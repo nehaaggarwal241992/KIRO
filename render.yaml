@@ -1,0 +1,30 @@
+services:
+  # PostgreSQL Database
+  - type: pserv
+    name: review-system-db
+    plan: free
+    databaseName: reviewsystem
+    databaseUser: reviewsystem_user
+
+  # Backend API
+  - type: web
+    name: review-system-api
+    runtime: node
+    plan: free
+    buildCommand: npm install --omit=optional
+    startCommand: node src/index.js
+    rootDir: backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: review-system-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        value: "*"
+    healthCheckPath: /api/products
