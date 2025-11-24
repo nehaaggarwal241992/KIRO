@@ -1,9 +1,5 @@
 // Smart database loader - uses PostgreSQL in production, SQLite in development
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+// This prevents SQLite from being loaded in production environments
 
 // Determine which database to use based on environment
 const usePostgres = process.env.DATABASE_URL || process.env.NODE_ENV === 'production';
@@ -11,11 +7,12 @@ const usePostgres = process.env.DATABASE_URL || process.env.NODE_ENV === 'produc
 let db;
 
 if (usePostgres) {
-  console.log('Loading PostgreSQL database configuration...');
-  const { default: postgresDb } = await import('./databasePostgres.js');
+  console.log('🚀 Loading PostgreSQL database configuration (Production)...');
+  // Use production-specific loader that doesn't import SQLite at all
+  const { default: postgresDb } = await import('./databaseProduction.js');
   db = postgresDb;
 } else {
-  console.log('Loading SQLite database configuration...');
+  console.log('💻 Loading SQLite database configuration (Development)...');
   const { default: sqliteDb } = await import('./database.js');
   db = sqliteDb;
 }

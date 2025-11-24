@@ -1,6 +1,11 @@
 import express from 'express';
 import cors from 'cors';
-import './config/initDatabase.js'; // Initialize database on startup
+// Initialize database based on environment
+if (process.env.DATABASE_URL || process.env.NODE_ENV === 'production') {
+  await import('./config/initDatabaseProduction.js');
+} else {
+  await import('./config/initDatabase.js');
+}
 import db from './config/databaseLoader.js'; // Import smart database loader (PostgreSQL or SQLite)
 import reviewsRouter from './routes/reviews.js';
 import productsRouter from './routes/products.js';

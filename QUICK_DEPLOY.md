@@ -31,7 +31,7 @@ git push origin main
 3. Settings:
    - Name: `review-system-api`
    - Root Directory: `backend`
-   - Build: `npm install --omit=optional`
+   - Build: `npm install --no-optional`
    - Start: `node src/index.js`
    - Plan: **Free**
 

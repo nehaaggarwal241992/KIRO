@@ -43,7 +43,7 @@ Total cost: **$0** (completely free!)
    - **Branch**: `main`
    - **Root Directory**: `backend`
    - **Runtime**: `Node`
-   - **Build Command**: `npm install --omit=optional`
+   - **Build Command**: `npm install --no-optional`
    - **Start Command**: `node src/index.js`
    - **Plan**: **Free**
 

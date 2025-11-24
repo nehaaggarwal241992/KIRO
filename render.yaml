@@ -11,7 +11,7 @@ services:
     name: review-system-api
     runtime: node
     plan: free
-    buildCommand: npm install --omit=optional
+    buildCommand: npm install --no-optional && npm prune --production
     startCommand: node src/index.js
     rootDir: backend
     envVars:
