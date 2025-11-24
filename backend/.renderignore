@@ -1,0 +1,5 @@
+tests/
+*.test.js
+*.spec.js
+node_modules/better-sqlite3/
+node_modules/sqlite3/
